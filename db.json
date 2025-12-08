@@ -1,0 +1,80 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice Student",
+      "email": "alice@example.com",
+      "role": "student"
+    },
+    {
+      "id": 2,
+      "name": "Bob Student",
+      "email": "bob@example.com",
+      "role": "student"
+    },
+    {
+      "id": 3,
+      "name": "Acme Corp",
+      "email": "contact@acme.com",
+      "role": "company"
+    },
+    {
+      "id": 4,
+      "name": "TechVision",
+      "email": "hr@techvision.com",
+      "role": "company"
+    }
+  ],
+
+  "offers": [
+    {
+      "id": 1,
+      "title": "Frontend Angular Intern",
+      "companyId": 3,
+      "companyName": "Acme Corp",
+      "location": "Remote",
+      "domain": "Web Development",
+      "description": "Work on Angular frontends",
+      "contractType": "Internship"
+    },
+    {
+      "id": 2,
+      "title": "Backend Node.js Intern",
+      "companyId": 3,
+      "companyName": "Acme Corp",
+      "location": "On-site",
+      "domain": "Backend Development",
+      "description": "Node.js and REST API development",
+      "contractType": "Internship"
+    },
+    {
+      "id": 3,
+      "title": "Data Science Trainee",
+      "companyId": 4,
+      "companyName": "TechVision",
+      "location": "Hybrid",
+      "domain": "Data",
+      "description": "Assist with ML dataset preparation",
+      "contractType": "Internship"
+    }
+  ],
+
+  "submissions": [
+    {
+      "id": 1,
+      "offerId": 1,
+      "studentId": 1,
+      "date": "2025-12-08T10:00:00.000Z",
+      "status": "pending",
+      "message": "Hello, I'd like to apply."
+    },
+    {
+      "id": 2,
+      "offerId": 3,
+      "studentId": 2,
+      "date": "2025-12-08T10:10:00.000Z",
+      "status": "pending",
+      "message": "Interested in this internship."
+    }
+  ]
+}

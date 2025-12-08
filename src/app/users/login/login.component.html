@@ -1,0 +1,37 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card border-0 shadow-lg" style="width: 420px;">
+    <div class="card-body p-5">
+      <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Welcome back</h2>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label fw-medium">Email address</label>
+          <input type="email" class="form-control form-control-lg" formControlName="email"
+                 placeholder="name@example.com">
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-medium">Password</label>
+          <input type="password" class="form-control form-control-lg" formControlName="password">
+        </div>
+
+        <button class="btn btn-primary btn-lg w-100 mb-3" type="submit"
+                [disabled]="loginForm.invalid">
+          Sign in
+        </button>
+      </form>
+
+      <div class="text-center">
+        <small class="text-muted">
+          New here?
+          <a routerLink="/users/register-student" class="fw-medium">Student</a> |
+          <a routerLink="/users/register-company" class="fw-medium">Company</a>
+        </small>
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+    </div>
+  </div>
+</div>

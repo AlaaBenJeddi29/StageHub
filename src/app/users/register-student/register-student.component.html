@@ -1,0 +1,40 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card border-0 shadow-lg" style="width: 450px;">
+    <div class="card-body p-5">
+      <div class="text-center mb-4">
+        <i class="bi bi-mortarboard-fill text-success" style="font-size: 3rem;"></i>
+        <h2 class="fw-bold mt-3">Create Student Account</h2>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label fw-medium">Full Name</label>
+          <input type="text" class="form-control form-control-lg" formControlName="name"
+                 placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-medium">Email</label>
+          <input type="email" class="form-control form-control-lg" formControlName="email"
+                 placeholder="john@university.edu">
+        </div>
+        <div class="mb-4">
+          <label class="form-label fw-medium">Password</label>
+          <input type="password" class="form-control form-control-lg" formControlName="password">
+        </div>
+
+        <button class="btn btn-success btn-lg w-100" type="submit"
+                [disabled]="registerForm.invalid">
+          Register as Student
+        </button>
+      </form>
+
+      <div class="text-center mt-3">
+        <small class="text-muted">
+          Already have an account? <a routerLink="/users/login" class="fw-medium">Login</a>
+        </small>
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+    </div>
+  </div>
+</div>

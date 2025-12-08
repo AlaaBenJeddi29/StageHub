@@ -1,16 +1,14 @@
+// src/app/app.component.spec.ts
 import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterModule.forRoot([])
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule], // better than RouterModule.forRoot([])
+      declarations: [AppComponent],
+    // declarations if using standalone: false (which we are)
     }).compileComponents();
   });
 
@@ -20,16 +18,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'stagehub'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('stagehub');
-  });
-
-  it('should render title', () => {
+  it('should render the navbar with brand name StageHub', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, stagehub');
+    const brand = compiled.querySelector('.navbar-brand');
+    expect(brand?.textContent).toContain('StageHub');
+  });
+
+  it('should have router-outlet', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

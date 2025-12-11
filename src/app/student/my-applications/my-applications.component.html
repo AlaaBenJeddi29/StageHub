@@ -1,0 +1,63 @@
+<!-- src/app/student/my-applications/my-applications.component.html -->
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <h2 class="fw-bold text-primary mb-0">
+      <i class="bi bi-file-earmark-check me-3"></i>My Applications
+    </h2>
+    <a routerLink="/student/offers" class="btn btn-outline-primary">
+      ← Browse Offers
+    </a>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <!-- Applications List -->
+  <div class="row g-4" *ngIf="!loading && applications.length > 0">
+    <div class="col-lg-6" *ngFor="let app of applications">
+      <div class="card h-100 shadow-sm border-0 hover-shadow">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">{{ app.offer.title }}</h5>
+          <span class="badge bg-{{ 
+            app.status === 'pending' ? 'warning' : 
+            app.status === 'accepted' ? 'success' : 'danger' 
+          }} fs-6">
+            {{ app.status | uppercase }}
+          </span>
+        </div>
+
+        <div class="card-body">
+          <p class="text-primary fw-bold mb-2">{{ app.offer.companyName }}</p>
+          <p class="text-muted small mb-3">
+            <i class="bi bi-geo-alt"></i> {{ app.offer.location }} • 
+            <i class="bi bi-tag"></i> {{ app.offer.domain }}
+          </p>
+
+          <div class="bg-light p-3 rounded mb-3">
+            <small class="text-muted">Your Message:</small>
+            <p class="mb-mb-0 mt-1">{{ app.message }}</p>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center text-muted small">
+            <span><i class="bi bi-calendar"></i> Applied on {{ app.date | date:'mediumDate' }}</span>
+            <a *ngIf="app.cv" [href]="'http://localhost:3000' + app.cv" target="_blank" class="text-decoration-none">
+              <i class="bi bi-file-earmark-pdf text-danger"></i> View CV
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && applications.length === 0" class="text-center py-5">
+    <i class="bi bi-inbox display-1 text-muted mb-4"></i>
+    <h4>No applications yet</h4>
+    <p class="text-muted">When you apply to internships, they'll appear here</p>
+    <a routerLink="/student/offers" class="btn btn-success btn-lg">
+      Start Applying Now
+    </a>
+  </div>
+</div>

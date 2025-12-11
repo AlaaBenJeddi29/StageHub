@@ -1,0 +1,59 @@
+<!-- src/app/company/offer-new/offer-new.component.html -->
+<div class="container py-5">
+  <h2 class="mb-5 text-center">Post New Internship</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg">
+        <div class="card-body p-5">
+          <form [formGroup]="offerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+              <label class="form-label fw-bold">Job Title</label>
+              <input class="form-control form-control-lg" formControlName="title">
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Location</label>
+                <input class="form-control" formControlName="location">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Domain</label>
+                <input class="form-control" formControlName="domain">
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">Description</label>
+              <textarea class="form-control" rows="5" formControlName="description"></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">Required Skills (comma separated)</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="requiredSkills"
+                placeholder="Angular, TypeScript, JavaScript, Git"
+              >
+              <div class="form-text">These will be used for smart matching with students</div>
+            </div>
+
+            <div class="d-grid gap-3">
+              <button
+                type="submit"
+                class="btn btn-success btn-lg fw-bold"
+                [disabled]="offerForm.invalid"
+              >
+                Publish Offer
+              </button>
+              <button type="button" class="btn btn-outline-secondary" routerLink="/company/offers">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

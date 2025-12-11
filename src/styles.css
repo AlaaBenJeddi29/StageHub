@@ -97,3 +97,22 @@ body {
 .text-muted {
   color: #6c757d !important;
 }
+
+
+/* src/styles.css (or styles.scss) - GLOBAL FIX */
+body {
+  padding-top: 80px; /* Adjust this value based on your navbar height */
+}
+
+/* Optional: Make it responsive */
+@media (max-width: 992px) {
+  body {
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    padding-top: 65px;
+  }
+}

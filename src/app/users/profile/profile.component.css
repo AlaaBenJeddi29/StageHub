@@ -1,0 +1,110 @@
+/* src/app/users/profile/profile.component.css */
+.profile-card {
+  border-radius: 2rem !important;
+  background: #fff;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.cover-gradient {
+  height: 250px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+}
+
+.cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%);
+  opacity: 0.8;
+}
+
+.avatar-container {
+  margin-top: -120px;
+}
+
+.avatar-img {
+  width: 180px !important;
+  height: 180px !important;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.avatar-wrapper:hover .avatar-img {
+  transform: scale(1.05);
+}
+
+.role-badge {
+  transform: translate(20%, 20%);
+  border: 3px solid #fff;
+}
+
+.profile-header {
+  margin-top: 20px;
+}
+
+.bg-gradient-badge {
+  background: linear-gradient(45deg, #ffc107, #ff8c00);
+}
+
+.skills-card, .company-desc-card {
+  border-radius: 1.5rem !important;
+  transition: all 0.3s ease;
+}
+
+.skills-card:hover, .company-desc-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.skill-badge {
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.skill-badge:hover {
+  transform: scale(1.1);
+  background: #198754 !important;
+}
+
+.contact-grid .shadow-sm {
+  border-radius: 1rem !important;
+  transition: all 0.3s ease;
+}
+
+.contact-grid .shadow-sm:hover {
+  background: #f8f9fa !important;
+  transform: translateY(-3px);
+}
+
+.edit-form-container {
+  margin-top: -20px; /* Overlap slightly for smooth transition */
+}
+
+.edit-form {
+  border-radius: 1.5rem !important;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-control, .form-select {
+  border-radius: 50rem !important;
+  padding: 0.75rem 1.5rem;
+}
+
+textarea.form-control {
+  border-radius: 1rem !important;
+}
+
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+}

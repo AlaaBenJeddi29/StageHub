@@ -1,0 +1,71 @@
+<!-- src/app/company/offer-edit/offer-edit.component.html -->
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center py-4">
+          <h3 class="mb-0">Edit Internship Offer</h3>
+        </div>
+
+        <div class="card-body p-5">
+          <!-- Loading -->
+          <div *ngIf="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading offer...</span>
+            </div>
+          </div>
+
+          <!-- Form -->
+          <form *ngIf="!loading" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+              <label class="form-label fw-bold">Job Title</label>
+              <input class="form-control form-control-lg" formControlName="title" placeholder="e.g. Frontend Angular Intern">
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Location</label>
+                <input class="form-control" formControlName="location" placeholder="Tunis, Remote...">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Domain</label>
+                <input class="form-control" formControlName="domain" placeholder="Web Development, AI...">
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">Description</label>
+              <textarea class="form-control" rows="6" formControlName="description" placeholder="Describe the internship..."></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">
+                Required Skills (comma separated)
+                <small class="text-muted d-block">Used for smart student matching</small>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="requiredSkills"
+                placeholder="Angular, TypeScript, Git, Firebase"
+              >
+            </div>
+
+            <div class="d-grid gap-3">
+              <button
+                type="submit"
+                class="btn btn-success btn-lg fw-bold"
+                [disabled]="offerForm.invalid || loading"
+              >
+                Update Offer
+              </button>
+              <button type="button" class="btn btn-outline-secondary" routerLink="/company/offers">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

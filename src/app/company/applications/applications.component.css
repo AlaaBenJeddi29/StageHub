@@ -1,0 +1,43 @@
+/* src/app/company/applications/applications.component.css */
+.hover-shadow {
+  transition: all 0.3s ease;
+}
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+.btn-group .btn {
+  border-radius: 0.375rem;
+}
+
+/* Make disabled buttons look nice */
+.btn.disabled {
+  opacity: 1;
+  cursor: default;
+}
+/* src/app/company/applications/applications.component.css */
+.modal-content {
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+  border-bottom: 1px solid #eee;
+}
+
+.modal-footer {
+  border-top: 1px solid #eee;
+}
+
+.btn-danger {
+  transition: all 0.3s ease;
+}
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220,53,69,0.3);
+}

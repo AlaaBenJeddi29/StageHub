@@ -1,42 +1,39 @@
-<!-- src/app/home/landing/landing.component.html -->
+<!-- Updated Landing Page (src/app/home/landing/landing.component.html) -->
 <div class="landing-wrapper">
   <!-- Hero Section -->
   <section class="hero min-vh-100 d-flex align-items-center position-relative overflow-hidden">
     <div class="container position-relative z-3">
-      <div class="row justify-content-center text-center text-md-start">
-        <div class="col-lg-7">
-          <h1 class="display-3 fw-bold text-white mb-4">
-            Find Your Dream <span class="text-warning">Internship</span>
+      <div class="row justify-content-center text-center text-md-start align-items-center">
+        <div class="col-lg-6 order-2 order-lg-1 mt-5 mt-lg-0">
+          <h1 class="display-2 fw-bold text-white mb-4 animate__animated animate__fadeInUp">
+            Unlock Your <span class="text-warning">Future Internship</span>
           </h1>
-          <p class="lead text-white-50 mb-5 fs-5">
-            Connect with top companies looking for talented students like you.
-            One platform. Real opportunities. Zero stress.
+          <p class="lead text-white-75 mb-5 fs-4 animate__animated animate__fadeInUp animate__delay-1s">
+            StageHub bridges ambitious students and innovative companies. Discover tailored internships, apply effortlessly, and launch your career.
           </p>
 
-          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-md-start">
+          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-md-start animate__animated animate__fadeInUp animate__delay-2s">
             <a routerLink="/users/register-student"
-               class="btn btn-warning btn-lg px-5 py-3 fw-bold shadow-lg">
-              <i class="bi bi-mortarboard-fill me-2"></i>
-              I'm a Student
+               class="btn btn-warning btn-xl px-5 py-3 fw-bold shadow-lg d-inline-flex align-items-center">
+              <i class="bi bi-mortarboard-fill me-2"></i> Join as Student
             </a>
             <a routerLink="/users/register-company"
-               class="btn btn-outline-light btn-lg px-5 py-3 fw-bold">
-              <i class="bi bi-building me-2"></i>
-              I'm a Company
+               class="btn btn-outline-light btn-xl px-5 py-3 fw-bold d-inline-flex align-items-center">
+              <i class="bi bi-building me-2"></i> Join as Company
             </a>
           </div>
 
-          <div class="mt-5 text-white-50">
-            <small>Already have an account?</small>
-            <a routerLink="/users/login" class="text-white fw-bold ms-2">Login →</a>
+          <div class="mt-5 text-white-50 animate__animated animate__fadeInUp animate__delay-3s">
+            <small>Already registered?</small>
+            <a routerLink="/users/login" class="text-white fw-bold ms-2 underline-hover">Login Now →</a>
           </div>
         </div>
 
-        <div class="col-lg-5 mt-5 mt-lg-0 text-center">
-          <div class="hero-img">
+        <div class="col-lg-6 order-1 order-lg-2 text-center">
+          <div class="hero-img animate__animated animate__zoomIn">
             <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&q=80"
-                 alt="Students working"
-                 class="img-fluid rounded-4 shadow-lg">
+                 alt="Students collaborating on internship projects"
+                 class="img-fluid rounded-4 shadow-lg border border-5 border-white border-opacity-25">
           </div>
         </div>
       </div>
@@ -44,28 +41,202 @@
 
     <!-- Background decoration -->
     <div class="bg-decoration"></div>
+    <div class="wave-bottom position-absolute bottom-0 start-0 end-0">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 C360,120 1080,120 1440,0 V120 H0 V0 Z" fill="#f8f9fa"></path>
+      </svg>
+    </div>
   </section>
 
-  <!-- Features -->
-  <section class="py-5 bg-light">
+  <!-- Features Section -->
+  <section class="py-6 bg-light">
     <div class="container py-5">
-      <div class="row text-center g-4">
+      <div class="row text-center g-5">
         <div class="col-md-4">
-          <div class="feature-icon bg-primary text-white mb-3">1</div>
-          <h4>Apply in Seconds</h4>
-         <p class="text-muted">One-click applications. No more endless forms.</p>
+          <div class="feature-card h-100 p-4 rounded-4 shadow-sm bg-white border-start border-primary border-5 transition-all">
+            <div class="feature-icon bg-primary text-white mb-3">1</div>
+            <h4 class="fw-bold">Apply in Seconds</h4>
+            <p class="text-muted">Streamlined one-click applications eliminate tedious forms—focus on what matters.</p>
+          </div>
         </div>
         <div class="col-md-4">
-          <div class="feature-icon bg-success text-white mb-3">2</div>
-          <h4>Get Matched Fast</h4>
-          <p class="text-muted">Companies see your profile instantly.</p>
+          <div class="feature-card h-100 p-4 rounded-4 shadow-sm bg-white border-start border-success border-5 transition-all">
+            <div class="feature-icon bg-success text-white mb-3">2</div>
+            <h4 class="fw-bold">Smart Matching</h4>
+            <p class="text-muted">AI-powered recommendations connect you with perfect-fit opportunities instantly.</p>
+          </div>
         </div>
         <div class="col-md-4">
-          <div class="feature-icon bg-warning text-dark mb-3">3</div>
-          <h4>Land the Gig</h4>
-          <p class="text-muted">Chat directly. Accept offers. Start working.</p>
+          <div class="feature-card h-100 p-4 rounded-4 shadow-sm bg-white border-start border-warning border-5 transition-all">
+            <div class="feature-icon bg-warning text-dark mb-3">3</div>
+            <h4 class="fw-bold">Secure Your Spot</h4>
+            <p class="text-muted">Direct chat with companies, accept offers, and track progress in one dashboard.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Why Internships Matter Section -->
+  <section class="py-6 bg-white">
+    <div class="container py-5">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <img src="https://theinterna.com/wp-content/uploads/2024/10/What-are-Internships-What-are-intern-jobs.webp" alt="Benefits of internships" class="img-fluid rounded-4 shadow-lg">
+        </div>
+        <div class="col-lg-6">
+          <h2 class="display-5 fw-bold mb-4">Why Internships Are Your Career Launchpad</h2>
+          <ul class="list-unstyled">
+            <li class="d-flex mb-3"><i class="bi bi-check-circle-fill text-success me-3 fs-4"></i> <strong>Gain Real-World Experience:</strong> Apply classroom knowledge in professional settings.</li>
+            <li class="d-flex mb-3"><i class="bi bi-check-circle-fill text-success me-3 fs-4"></i> <strong>Build Your Network:</strong> Connect with industry leaders and peers.</li>
+            <li class="d-flex mb-3"><i class="bi bi-check-circle-fill text-success me-3 fs-4"></i> <strong>Boost Employability:</strong> 80% of interns receive full-time offers from their host company.</li>
+            <li class="d-flex mb-3"><i class="bi bi-check-circle-fill text-success me-3 fs-4"></i> <strong>Explore Careers:</strong> Test drives for your future—discover what you love.</li>
+          </ul>
+          <a routerLink="/users/register-student" class="btn btn-primary btn-lg mt-3">Start Your Journey</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Students Section -->
+  <section class="py-6 bg-gradient-primary text-white">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">Empowering Students</h2>
+        <p class="lead">Find internships that align with your skills, passions, and schedule.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="text-center p-4">
+            <i class="bi bi-search fs-1 mb-3 text-warning"></i>
+            <h5>Browse Curated Offers</h5>
+            <p class="small">Filter by industry, location, duration, and pay.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="text-center p-4">
+            <i class="bi bi-file-earmark-text fs-1 mb-3 text-warning"></i>
+            <h5>Easy Applications</h5>
+            <p class="small">Upload resume once—apply to multiple with a click.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="text-center p-4">
+            <i class="bi bi-chat-dots fs-1 mb-3 text-warning"></i>
+            <h5>Direct Communication</h5>
+            <p class="small">Message companies and get feedback fast.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="text-center p-4">
+            <i class="bi bi-trophy fs-1 mb-3 text-warning"></i>
+            <h5>Track Progress</h5>
+            <p class="small">Monitor applications, interviews, and offers in real-time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Companies Section -->
+  <section class="py-6 bg-light">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">Attract Top Talent</h2>
+        <p class="lead">Post internships and discover motivated students ready to contribute.</p>
+      </div>
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 shadow-sm">
+            <i class="bi bi-megaphone fs-1 mb-3 text-primary"></i>
+            <h5>Post Unlimited Offers</h5>
+            <p class="small">Free listings with premium visibility options.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 shadow-sm">
+            <i class="bi bi-funnel fs-1 mb-3 text-primary"></i>
+            <h5>Smart Candidate Filtering</h5>
+            <p class="small">Search by skills, GPA, availability, and more.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 shadow-sm">
+            <i class="bi bi-graph-up-arrow fs-1 mb-3 text-primary"></i>
+            <h5>Analytics & Insights</h5>
+            <p class="small">Track views, applications, and hire rates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-6 bg-white">
+    <div class="container py-5">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">Success Stories</h2>
+        <p class="lead">Hear from our community of students and companies.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="testimonial-card p-4 bg-light rounded-4 shadow-sm">
+            <p class="italic">"StageHub matched me with a tech startup—landed a paid internship in weeks!"</p>
+            <div class="d-flex align-items-center mt-3">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student" class="rounded-circle me-3" width="50">
+              <div><strong>Alexandra M.</strong><br><small>Computer Science Student</small></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card p-4 bg-light rounded-4 shadow-sm">
+            <p class="italic">"Found creative interns who brought fresh ideas to our marketing team."</p>
+            <div class="d-flex align-items-center mt-3">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Company" class="rounded-circle me-3" width="50">
+              <div><strong>John D.</strong><br><small>HR Manager, InnovateCo</small></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card p-4 bg-light rounded-4 shadow-sm">
+            <p class="italic">"The platform simplified everything—from posting to hiring."</p>
+            <div class="d-flex align-items-center mt-3">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Student" class="rounded-circle me-3" width="50">
+              <div><strong>Sophia L.</strong><br><small>Business Major</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-6 bg-gradient-warning text-dark">
+    <div class="container py-5 text-center">
+      <h2 class="display-5 fw-bold mb-4">Ready to Get Started?</h2>
+      <p class="lead mb-5">Join thousands of students and companies transforming internships today.</p>
+      <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+        <a routerLink="/users/register-student" class="btn btn-dark btn-xl px-5 py-3 fw-bold">Sign Up as Student</a>
+        <a routerLink="/users/register-company" class="btn btn-outline-dark btn-xl px-5 py-3 fw-bold">Sign Up as Company</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="fw-bold d-flex align-items-center"><i class="bi bi-briefcase-fill me-2 text-warning"></i> StageHub</h5>
+          <p class="small text-white-50">Your gateway to meaningful internships.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+          <p class="small text-white-50 mt-3">&copy; 2025 StageHub. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>

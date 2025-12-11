@@ -1,0 +1,51 @@
+<!-- src/app/student/offer-details/offer-details.component.html -->
+<div class="container py-5" *ngIf="offer">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-gradient bg-primary text-white text-center py-5 position-relative overflow-hidden">
+          <div class="position-absolute top-0 end-0 p-4">
+            <div class="bg-white text-primary rounded-pill px-4 py-2 fw-bold shadow">
+              {{ offer.matchScore || 0 }}% Match
+            </div>
+          </div>
+          <h2 class="display-5 fw-bold">{{ offer.title }}</h2>
+          <p class="lead mb-0">{{ offer.companyName }}</p>
+        </div>
+
+        <div class="card-body p-5">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <p><strong>Location:</strong> {{ offer.location }}</p>
+              <p><strong>Domain:</strong> {{ offer.domain }}</p>
+              <p><strong>Type:</strong> {{ offer.contractType }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Posted:</strong> Recently</p>
+              <p><strong>Required Skills:</strong></p>
+              <div class="d-flex flex-wrap gap-2">
+                <span *ngFor="let skill of offer.requiredSkills" class="badge bg-light text-dark">
+                  {{ skill }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <h5>Description</h5>
+          <p class="lead text-muted">{{ offer.description }}</p>
+
+          <div class="text-center mt-5">
+            <button class="btn btn-success btn-lg px-5 fw-bold" (click)="apply()">
+              Apply Now
+            </button>
+            <button class="btn btn-outline-secondary ms-3" routerLink="/student/offers">
+              ← Back to Offers
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

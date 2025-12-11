@@ -1,0 +1,181 @@
+<!-- src/app/company/offers-list/offers-list.component.html -->
+<div class="container py-5">
+  <!-- Header -->
+  <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-4 mb-5">
+    <div>
+      <h2 class="fw-bold text-primary mb-2">
+        <i class="bi bi-briefcase-fill me-3"></i>My Internship Offers
+      </h2>
+      <p class="text-muted mb-0">Manage and track all your posted internships</p>
+    </div>
+    <button class="btn btn-success btn-lg shadow-lg d-flex align-items-center gap-2" routerLink="/company/offers/new">
+      <i class="bi bi-plus-circle-fill"></i>
+      Post New Offer
+    </button>
+  </div>
+
+  <!-- Search & Filters Bar -->
+  <div class="card border-0 shadow-sm mb-5">
+    <div class="card-body p-4">
+      <div class="row g-3 align-items-end">
+        <div class="col-lg-5">
+          <label class="form-label fw-semibold">Search Offers</label>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control border-start-0 ps-0" placeholder="Title, domain, location..."
+                   [(ngModel)]="searchTerm" (input)="applyFilters()">
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <label class="form-label fw-semibold">Domain</label>
+          <select class="form-select form-select-lg" [(ngModel)]="filterDomain" (change)="applyFilters()">
+            <option [ngValue]="''">All Domains</option>
+            <option value="Software Development">Software Development</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Design">Design</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Finance">Finance</option>
+            <option value="Human Resources">Human Resources</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+          <label class="form-label fw-semibold">Sort By</label>
+          <select class="form-select form-select-lg" [(ngModel)]="sortBy" (change)="applyFilters()">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="applicationsDesc">Most Applications</option>
+            <option value="applicationsAsc">Fewest Applications</option>
+            <option value="title">Title A-Z</option>
+          </select>
+        </div>
+
+        <div class="col-lg-2">
+          <button class="btn btn-outline-secondary btn-lg w-100" (click)="clearFilters()"
+                  [disabled]="!hasActiveFilters">
+            <i class="bi bi-arrow-counterclockwise"></i> Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Filters Chips -->
+      <div class="mt-3 d-flex flex-wrap gap-2" *ngIf="hasActiveFilters">
+        <span class="badge bg-primary fs-6 px-3 py-2" *ngIf="searchTerm">
+          Search: "{{ searchTerm }}" <button type="button" class="btn-close btn-close-white ms-2" (click)="searchTerm=''; applyFilters()"></button>
+        </span>
+        <span class="badge bg-info fs-6 px-3 py-2" *ngIf="filterDomain">
+          Domain: {{ filterDomain }} <button type="button" class="btn-close btn-close-white ms-2" (click)="filterDomain=''; applyFilters()"></button>
+        </span>
+        <span class="badge bg-secondary fs-6 px-3 py-2" *ngIf="sortBy !== 'newest'">
+          Sort: {{ getSortLabel() }} <button type="button" class="btn-close btn-close-white ms-2" (click)="sortBy='newest'; applyFilters()"></button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card bg-primary text-white shadow-lg border-0 h-100">
+        <div class="card-body d-flex align-items-center">
+          <i class="bi bi-briefcase fs-1 me-4"></i>
+          <div>
+            <h3 class="mb-0">{{ offers.length }}</h3>
+            <small>Total Offers</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-success text-white shadow-lg border-0 h-100">
+        <div class="card-body d-flex align-items-center">
+          <i class="bi bi-people fs-1 me-4"></i>
+          <div>
+            <h3 class="mb-0">{{ totalApplications }}</h3>
+            <small>Total Applications</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-warning text-dark shadow-lg border-0 h-100">
+        <div class="card-body d-flex align-items-center">
+          <i class="bi bi-graph-up-arrow fs-1 me-4"></i>
+          <div>
+            <h3 class="mb-0">{{ averageApplications | number:'1.1-1' }}</h3>
+            <small>Avg per Offer</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;"></div>
+  </div>
+
+  <!-- Offers Grid -->
+  <div class="row g-4" *ngIf="!loading && filteredOffers.length > 0">
+    <div class="col-lg-6 col-xl-4" *ngFor="let offer of paginatedOffers">
+      <div class="card h-100 offer-card border-0 shadow-sm position-relative overflow-hidden">
+        <div class="position-absolute top-0 end-0 z-3 p-3">
+          <span class="badge rounded-pill px-4 py-3 fs-6 shadow"
+                [ngClass]="{'bg-success': offer.applicationCount >= 10, 'bg-primary': offer.applicationCount > 0, 'bg-secondary': offer.applicationCount === 0}">
+            {{ offer.applicationCount || 0 }}
+          </span>
+        </div>
+
+        <div class="card-body p-4">
+          <h5 class="fw-bold text-dark mb-3">{{ offer.title }}</h5>
+          <div class="d-flex flex-wrap gap-3 text-muted small mb-3">
+            <span><i class="bi bi-geo-alt-fill text-primary"></i> {{ offer.location }}</span>
+            <span><i class="bi bi-tags-fill text-success"></i> {{ offer.domain }}</span>
+          </div>
+          <p class="text-muted small line-clamp-3">{{ offer.description }}</p>
+
+          <div class="mt-4 d-grid d-md-flex gap-2">
+            <button class="btn btn-outline-primary btn-sm" (click)="edit(offer.id)">Edit</button>
+            <button class="btn btn-outline-danger btn-sm" (click)="delete(offer.id)">Delete</button>
+            <button class="btn btn-primary btn-sm flex-grow-1" (click)="viewApplications(offer.id)"
+                    [disabled]="!offer.applicationCount">
+              View Applications ({{ offer.applicationCount || 0 }})
+            </button>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent text-muted small">
+          Posted {{ offer.createdAt | date:'mediumDate' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-5" *ngIf="!loading && totalPages > 1">
+    <nav>
+      <ul class="pagination pagination-lg">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link rounded-pill px-4" (click)="setPage(currentPage - 1)">Previous</button>
+        </li>
+        <li class="page-item" *ngFor="let p of getPageArray()" [class.active]="currentPage === p">
+          <button class="page-link rounded-pill" (click)="setPage(p)">{{ p }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link rounded-pill px-4" (click)="setPage(currentPage + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && filteredOffers.length === 0" class="text-center py-5">
+    <i class="bi bi-inbox display-1 text-muted opacity-50 mb-4"></i>
+    <h3 class="text-muted">No offers found</h3>
+    <p class="text-muted">Try adjusting filters or post your first internship!</p>
+    <button class="btn btn-success btn-lg px-5" routerLink="/company/offers/new">
+      Post Your First Offer
+    </button>
+  </div>
+</div>

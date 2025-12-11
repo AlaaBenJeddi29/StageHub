@@ -1,0 +1,137 @@
+<!-- src/app/company/applications/applications.component.html -->
+<div class="container py-5">
+  <div class="d-flex align-items-center mb-4">
+    <button class="btn btn-outline-secondary me-3" routerLink="/company/offers">
+      Back to Offers
+    </button>
+    <h2 class="mb-0">Applications for "{{ offer?.title }}"</h2>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && applications.length === 0" class="text-center py-5">
+    <i class="bi bi-inbox display-1 text-muted mb-4"></i>
+    <h4>No applications yet</h4>
+    <p class="text-muted">Students haven't applied to this offer yet</p>
+  </div>
+
+  <!-- Applications Grid -->
+  <div class="row g-4" *ngIf="!loading && applications.length > 0">
+    <div class="col-lg-8" *ngFor="let app of applications">
+      <div class="card shadow-sm border-0 hover-shadow">
+        <div class="card-body">
+          <!-- Header: Name + Status -->
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+              <h5 class="mb-1 fw-bold">{{ app.student.name }}</h5>
+              <p class="text-muted mb-1">{{ app.student.email }}</p>
+              <small class="text-muted">
+                Phone {{ app.student.phone || 'No phone' }}
+              </small>
+            </div>
+
+            <!-- Status Badge -->
+            <span class="badge fs-6 px-4 py-2" 
+                  [class.bg-warning]="app.status === 'pending'"
+                  [class.bg-success]="app.status === 'accepted'"
+                  [class.bg-danger]="app.status === 'rejected'">
+              {{ app.status.toUpperCase() }}
+            </span>
+          </div>
+
+          <!-- Message -->
+          <div class="bg-light p-4 rounded mb-4 border-start border-primary border-4">
+            <strong>Cover Message:</strong>
+            <p class="mt-2 mb-0 text-dark">{{ app.message }}</p>
+          </div>
+
+          <!-- Actions Row -->
+          <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+            <!-- CV Download -->
+            <a [href]="'http://localhost:3000' + app.cv" 
+               target="_blank" 
+               class="btn btn-outline-danger btn-sm">
+              Download CV
+            </a>
+
+            <!-- Decision Buttons -->
+            <div class="btn-group" role="group">
+              <button 
+                *ngIf="app.status === 'pending'"
+                class="btn btn-success btn-sm"
+                (click)="updateStatus(app.id, 'accepted')">
+                Accept
+              </button>
+              <button 
+                *ngIf="app.status === 'pending'"
+                class="btn btn-danger btn-sm"
+                (click)="updateStatus(app.id, 'rejected')">
+                Reject
+              </button>
+
+              <!-- Show result when decided -->
+              <span 
+                *ngIf="app.status === 'accepted'"
+                class="btn btn-success btn-sm disabled opacity-100">
+                Accepted
+              </span>
+              <span 
+                *ngIf="app.status === 'rejected'"
+                class="btn btn-danger btn-sm disabled opacity-100">
+                Rejected
+              </span>
+            </div>
+
+            <!-- Delete Button with Modal Trigger -->
+            <button 
+              class="btn btn-outline-dark btn-sm"
+              (click)="confirmDelete(app.id)">
+              Delete Application
+            </button>
+          </div>
+
+          <small class="text-muted d-block text-end mt-3">
+            Applied on {{ app.date | date:'medium' }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- AND REPLACE WITH THIS CORRECT BOOTSTRAP MODAL -->
+<!-- DELETE YOUR CURRENT MODAL AND USE THIS ONE -->
+<div class="modal fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-danger">
+          Confirm Delete
+        </h5>
+        <button type="button" class="btn-close" (click)="showDeleteModal = false"></button>
+      </div>
+      <div class="modal-body py-4">
+        <p class="mb-2">Are you sure you want to <strong>permanently delete</strong> this application?</p>
+        <p class="text-danger mb-0 small">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" (click)="showDeleteModal = false">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger px-4" (click)="deleteApplication()">
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SINGLE BACKDROP — THIS IS THE ONLY ONE NEEDED -->
+<div class="modal-backdrop fade show" *ngIf="showDeleteModal"></div>

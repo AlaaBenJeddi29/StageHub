@@ -1,0 +1,49 @@
+/* src/app/company/offers-list/offers-list.component.css */
+.offer-card {
+  border-radius: 1rem !important;
+  transition: all 0.4s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
+}
+
+.badge {
+  transform: translate(30%, -50%);
+  font-weight: 600;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.input-group-lg .form-control,
+.form-select-lg,
+.btn-lg {
+  border-radius: 0.75rem !important;
+}
+
+.card.shadow-lg {
+  border-radius: 1rem;
+}
+
+.pagination .page-link {
+  border-radius: 50rem !important;
+  padding: 0.75rem 1.25rem !important;
+  margin: 0 0.25rem;
+  font-weight: 600;
+}
+
+.pagination .page-item.active .page-link {
+  background: linear-gradient(45deg, #667eea, #764ba2) !important;
+  border: none;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}

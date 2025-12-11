@@ -18,4 +18,9 @@ export class AppComponent {
     this.auth.logout();
     this.router.navigate(['/']);
   }
+
+getRole() {
+    return this.auth.getRole();
+  }
+
 }

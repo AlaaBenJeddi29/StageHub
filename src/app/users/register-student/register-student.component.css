@@ -1,17 +1,26 @@
-.container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  text-align: center;
+/* src/app/users/register-student/register-student.component.css */
+.card {
+  border-radius: 2rem !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12) !important;
 }
-h2 { color: #333; }
-.form-group { margin-bottom: 15px; text-align: left; }
-label { display: block; margin-bottom: 5px; }
-input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
-button:disabled { background-color: #ccc; }
-.error { color: red; margin-top: 10px; }
-a { color: #007bff; text-decoration: none; }
+
+.form-control,
+.form-control-lg,
+textarea.form-control {
+  border-radius: 50rem !important;
+}
+
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+
+.btn-success {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  border: none;
+  padding: 0.9rem;
+}
+
+.btn-success:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(40,167,69,0.3);
+}

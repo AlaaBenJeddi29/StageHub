@@ -1,51 +1,223 @@
+<!-- src/app/users/profile/profile.component.html -->
 <div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <div class="card shadow">
-        <div class="card-header bg-primary text-white text-white text-center py-4">
-          <i class="bi bi-person-circle fs-1"></i>
-          <h3 class="mb-0 mt-2">{{ user.role === 'student' ? 'Student' : 'Company' }} Profile</h3>
+    <div class="col-xl-8 col-lg-10">
+      
+      <!-- PROFILE CARD -->
+      <div class="card border-0 shadow-lg overflow-hidden profile-card">
+        
+        <!-- Gradient Cover with Subtle Pattern -->
+        <div class="cover-gradient position-relative">
+          <div class="cover-overlay"></div>
+        </div>
+        
+        <!-- Avatar + Role Badge -->
+        <div class="text-center position-relative avatar-container">
+          <div class="avatar-wrapper d-inline-block position-relative">
+            <img 
+              [src]="getProfileImageUrl()"
+              class="rounded-circle border border-5 border-white shadow-lg avatar-img"
+              alt="Profile"
+              onerror="this.src='https://via.placeholder.com/200';">
+            <!-- Role Badge with Emoji -->
+            <div class="role-badge position-absolute bottom-0 end-0 bg-white rounded-circle p-2 shadow">
+              <i class="bi fs-3"
+                 [class.bi-mortarboard-fill]="user.role === 'student'"
+                 [class.bi-building-fill]="user.role === 'company'"
+                 [class.text-success]="user.role === 'student'"
+                 [class.text-primary]="user.role === 'company'"></i>
+            </div>
+          </div>
         </div>
 
-        <div class="card-body p-5">
-          <div *ngIf="!editing; else editMode">
-            <div class="row mb-3">
-              <div class="col-sm-4 fw-bold">Name</div>
-              <div class="col-sm-8">{{ user.name }}</div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-4 fw-bold">Email</div>
-              <div class="col-sm-8">{{ user.email }}</div>
-            </div>
-            <div class="row mb-4">
-              <div class="col-sm-4 fw-bold">Role</div>
-              <div class="col-sm-8">
-                <span class="badge bg-{{ user.role === 'student' ? 'info' : 'dark' }} fs-6">
-                  {{ user.role | titlecase }}
-                </span>
-              </div>
-            </div>
+        <!-- Name & Basic Info -->
+        <div class="text-center px-4 profile-header">
+          <h2 class="fw-bold mb-1 display-6">{{ user.name }} <i class="bi bi-patch-check-fill text-success ms-2" *ngIf="user.verified"></i></h2>
+          <p class="text-muted lead mb-3">
+            <ng-container *ngIf="user.role === 'student'">
+              <i class="bi bi-book-half me-2 text-warning"></i>Student in {{ user.education || 'Your Field' }}
+            </ng-container>
+            <ng-container *ngIf="user.role === 'company'">
+              <i class="bi bi-briefcase-fill me-2 text-warning"></i>{{ user.industry || 'Innovative Company' }}
+            </ng-container>
+          </p>
+          <span class="badge bg-gradient-badge text-white fs-6 px-4 py-2 rounded-pill shadow-sm">
+            {{ user.role === 'student' ? 'Student Profile' : 'Company Profile' }}
+          </span>
+        </div>
 
-            <button class="btn btn-outline-primary me-3" (click)="toggleEdit()">Edit Profile</button>
-            <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+        <!-- Role-Specific Sections -->
+        <div class="px-5 py-4">
+          <!-- Student Skills Card -->
+          <div *ngIf="user.role === 'student'" class="skills-card mb-4 p-4 rounded-4 shadow-sm bg-light">
+            <h4 class="fw-bold mb-3 text-center"><i class="bi bi-stars text-warning me-2"></i>My Super Skills</h4>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <span *ngFor="let skill of user.skills || []" class="skill-badge bg-success text-white rounded-pill px-3 py-2 d-flex align-items-center gap-1 shadow-sm">
+                <i class="bi bi-emoji-heart-eyes fs-5"></i> {{ skill }}
+              </span>
+              <span *ngIf="!user.skills || user.skills.length === 0" class="text-muted fst-italic">
+                Add some skills to shine! ✨
+              </span>
+            </div>
           </div>
 
-          <ng-template #editMode>
-            <form [formGroup]="editForm" (ngSubmit)="onUpdate()">
-              <div class="mb-3">
-                <label class="form-label">{{ user.role === 'student' ? 'Full Name' : 'Company Name' }}</label>
-                <input type="text" class="form-control" formControlName="name">
-              </div>
-              <div class="mb-4">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" formControlName="email">
-              </div>
-              <button type="submit" class="btn btn-success me-3">Save Changes</button>
-              <button type="button" class="btn btn-secondary" (click)="toggleEdit()">Cancel</button>
-            </form>
-          </ng-template>
+          <!-- Company Description Card -->
+          <div *ngIf="user.role === 'company'" class="company-desc-card mb-4 p-4 rounded-4 shadow-sm bg-light">
+            <h4 class="fw-bold mb-3 text-center"><i class="bi bi-heart-fill text-danger me-2"></i>About Us</h4>
+            <p class="text-muted text-center lead">{{ user.description || 'We are an amazing company looking for talented interns! 🚀' }}</p>
+            <div class="text-center mt-3">
+              <a [href]="'https://' + user.website" target="_blank" class="btn btn-outline-primary rounded-pill px-4" *ngIf="user.website">
+                <i class="bi bi-globe me-2"></i>Visit Website
+              </a>
+            </div>
+          </div>
 
-          <div *ngIf="error" class="alert alert-danger mt-4">{{ error }}</div>
+          <!-- Quick Actions -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-6" *ngIf="user.role === 'student'">
+              <a routerLink="/student/offers" class="btn btn-primary btn-lg w-100 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-search-heart"></i> Browse Offers
+              </a>
+            </div>
+            <div class="col-md-6" *ngIf="user.role === 'student'">
+              <a routerLink="/student/candidatures" class="btn btn-outline-primary btn-lg w-100 rounded-pill d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-list-check"></i> My Applications
+              </a>
+            </div>
+            <div class="col-md-6" *ngIf="user.role === 'company'">
+              <a routerLink="/company/offers" class="btn btn-primary btn-lg w-100 rounded-pill fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-briefcase"></i> My Offers
+              </a>
+            </div>
+            <div class="col-md-6" *ngIf="user.role === 'company'">
+              <a routerLink="/company/offers/new" class="btn btn-success btn-lg w-100 rounded-pill d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-plus-circle-fill"></i> Post New Offer
+              </a>
+            </div>
+          </div>
+
+          <!-- Contact Info Grid -->
+          <div class="row g-4 contact-grid">
+            <div class="col-md-6">
+              <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                <i class="bi bi-envelope-fill text-primary fs-3 me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Email</small>
+                  <strong>{{ user.email }}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                <i class="bi bi-telephone-fill text-primary fs-3 me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Phone</small>
+                  <strong>{{ user.phone || 'Add your phone!' }}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="user.role === 'student'">
+              <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                <i class="bi bi-trophy-fill text-warning fs-3 me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Experience</small>
+                  <strong>{{ user.experience || 'Fresh and ready to learn! 🌱' }}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="user.role === 'company'">
+              <div class="d-flex align-items-center p-3 bg-white rounded-3 shadow-sm">
+                <i class="bi bi-people-fill text-success fs-3 me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Company Size</small>
+                  <strong>{{ user.size || 'Growing team!' }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit & Logout Buttons -->
+        <div class="px-5 pb-5 text-center">
+          <button class="btn btn-outline-primary btn-lg px-5 rounded-pill me-3 shadow" (click)="toggleEdit()">
+            <i class="bi bi-pencil-square me-2"></i>Edit Profile
+          </button>
+          <button class="btn btn-outline-danger btn-lg px-5 rounded-pill shadow" (click)="logout()">
+            <i class="bi bi-box-arrow-right me-2"></i>Logout
+          </button>
+        </div>
+
+        <!-- Edit Form -->
+        <div *ngIf="editing" class="edit-form-container px-5 pb-5">
+          <div class="edit-form p-5 bg-light rounded-4 shadow-lg">
+            <h4 class="text-center mb-4 fw-bold"><i class="bi bi-gear-fill me-2 text-primary"></i>Update Your Profile</h4>
+            <form [formGroup]="editForm" (ngSubmit)="onUpdate()">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Name</label>
+                  <input formControlName="name" class="form-control form-control-lg rounded-pill" placeholder="Your Name">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Email</label>
+                  <input formControlName="email" class="form-control form-control-lg rounded-pill" type="email" placeholder="email@example.com">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Phone</label>
+                  <input formControlName="phone" class="form-control form-control-lg rounded-pill" placeholder="+1 (555) 123-4567">
+                </div>
+                <div class="col-md-6" *ngIf="user.role === 'student'">
+                  <label class="form-label fw-semibold">Education</label>
+                  <input formControlName="education" class="form-control form-control-lg rounded-pill" placeholder="e.g., Computer Science at XYZ University">
+                </div>
+                <div class="col-md-6" *ngIf="user.role === 'student'">
+                  <label class="form-label fw-semibold">Experience</label>
+                  <input formControlName="experience" class="form-control form-control-lg rounded-pill" placeholder="e.g., 1 year in web development">
+                </div>
+                <div class="col-12" *ngIf="user.role === 'student'">
+                  <label class="form-label fw-semibold">Skills (comma-separated)</label>
+                  <input formControlName="skills" class="form-control form-control-lg rounded-pill" placeholder="e.g., Angular, JavaScript, UI/UX">
+                </div>
+                <div class="col-md-6" *ngIf="user.role === 'company'">
+                  <label class="form-label fw-semibold">Industry</label>
+                  <input formControlName="industry" class="form-control form-control-lg rounded-pill" placeholder="e.g., Technology">
+                </div>
+                <div class="col-md-6" *ngIf="user.role === 'company'">
+                  <label class="form-label fw-semibold">Company Size</label>
+                  <input formControlName="size" class="form-control form-control-lg rounded-pill" placeholder="e.g., 50-200 employees">
+                </div>
+                <div class="col-md-6" *ngIf="user.role === 'company'">
+                  <label class="form-label fw-semibold">Website</label>
+                  <input formControlName="website" class="form-control form-control-lg rounded-pill" placeholder="e.g., www.example.com">
+                </div>
+                <div class="col-12" *ngIf="user.role === 'company'">
+                  <label class="form-label fw-semibold">Description</label>
+                  <textarea formControlName="description" class="form-control rounded-4" rows="4" placeholder="Tell us about your company..."></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">New Password</label>
+                  <input formControlName="newPassword" class="form-control form-control-lg rounded-pill" type="password" placeholder="Leave blank to keep current">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Confirm Password</label>
+                  <input formControlName="confirmPassword" class="form-control form-control-lg rounded-pill" type="password" placeholder="Confirm new password">
+                </div>
+                <div class="col-12 text-center">
+                  <label class="form-label fw-semibold d-block">Profile Picture</label>
+                  <input type="file" id="profileImage" class="form-control w-50 mx-auto rounded-pill" accept="image/*">
+                </div>
+              </div>
+              <div class="d-flex gap-3 mt-5 justify-content-center">
+                <button type="submit" class="btn btn-success btn-lg px-5 rounded-pill shadow" [disabled]="editForm.invalid">
+                  <i class="bi bi-save me-2"></i>Save Changes
+                </button>
+                <button type="button" class="btn btn-secondary btn-lg px-5 rounded-pill shadow" (click)="toggleEdit()">
+                  <i class="bi bi-x-circle me-2"></i>Cancel
+                </button>
+              </div>
+            </form>
+            <div *ngIf="error" class="alert alert-danger mt-4 rounded-3 text-center">{{ error }}</div>
+            <div *ngIf="success" class="alert alert-success mt-4 rounded-3 text-center">{{ success }}</div>
+          </div>
         </div>
       </div>
     </div>

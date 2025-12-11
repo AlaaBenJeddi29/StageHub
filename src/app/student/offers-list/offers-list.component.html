@@ -1,0 +1,152 @@
+<!-- src/app/student/offers-list/offers-list.component.html -->
+<div class="container py-5">
+  <!-- Hero Header -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-primary mb-3">
+      <i class="bi bi-stars me-3 text-warning"></i>
+      Internships Matched Just for You
+    </h1>
+    <p class="lead text-muted">We analyze your skills and show you the best opportunities first</p>
+  </div>
+
+  <!-- Filters Bar -->
+  <div class="card border-0 shadow-sm mb-5">
+    <div class="card-body p-4">
+      <div class="row g-3 align-items-end">
+        <div class="col-lg-4">
+          <label class="form-label fw-semibold">Search</label>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control border-start-0 ps-0" placeholder="Job title, company, domain..."
+                   [(ngModel)]="searchTerm" (input)="applyFilters()">
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <label class="form-label fw-semibold">Domain</label>
+          <select class="form-select form-select-lg" [(ngModel)]="filterDomain" (change)="applyFilters()">
+            <option [ngValue]="''">All Domains</option>
+            <option value="Software Development">Software Development</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Design">Design</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Finance">Finance</option>
+            <option value="Human Resources">Human Resources</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <label class="form-label fw-semibold">Minimum Match</label>
+          <select class="form-select form-select-lg" [(ngModel)]="minMatch" (change)="applyFilters()">
+            <option [ngValue]="0">Any Match</option>
+            <option value="50">50%+</option>
+            <option value="70">70%+</option>
+            <option value="90">90%+</option>
+          </select>
+        </div>
+
+        <div class="col-lg-2">
+          <button class="btn btn-outline-secondary btn-lg w-100" (click)="clearFilters()" [disabled]="!hasActiveFilters">
+            <i class="bi bi-arrow-counterclockwise"></i> Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Chips -->
+      <div class="mt-3 d-flex flex-wrap gap-2" *ngIf="hasActiveFilters">
+        <span class="badge bg-primary fs-6 px-3 py-2" *ngIf="searchTerm">
+          "{{ searchTerm }}" <button class="btn-close btn-close-white ms-2" (click)="searchTerm=''; applyFilters()"></button>
+        </span>
+        <span class="badge bg-info fs-6 px-3 py-2" *ngIf="filterDomain">
+          {{ filterDomain }} <button class="btn-close btn-close-white ms-2" (click)="filterDomain=''; applyFilters()"></button>
+        </span>
+        <span class="badge bg-success fs-6 px-3 py-2" *ngIf="minMatch > 0">
+          Match ≥{{ minMatch }}% <button class="btn-close btn-close-white ms-2" (click)="minMatch=0; applyFilters()"></button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;"></div>
+    <p class="mt-3 text-muted">Finding your perfect internships...</p>
+  </div>
+
+  <!-- Offers Grid -->
+  <div class="row g-4" *ngIf="!loading && filteredOffers.length > 0">
+    <div class="col-md-6 col-lg-4" *ngFor="let offer of filteredOffers">
+      <div class="card h-100 offer-card border-0 shadow-sm position-relative overflow-hidden">
+        
+        <!-- Save Button (Top Right) -->
+        <button class="btn btn-sm position-absolute top-0 end-0 m-3 z-3" 
+                [ngClass]="offer.saved ? 'btn-danger' : 'btn-outline-danger'"
+                (click)="toggleSave(offer)">
+          <i class="bi" [ngClass]="offer.saved ? 'bi-heart-fill' : 'bi-heart'"></i>
+        </button>
+
+        <!-- Match Badge -->
+        <div class="p-4 bg-gradient-match text-white text-center">
+          <div class="d-flex align-items-center justify-content-center gap-3">
+            <div class="match-circle" [ngClass]="getMatchClass(offer.matchScore)">
+              {{ offer.matchScore }}%
+            </div>
+            <div class="text-start">
+              <small class="opacity-75 d-block">Skills Match</small>
+              <strong>{{ offer.matchedCount }} / {{ offer.totalRequired }} matched</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body pt-4">
+          <h5 class="fw-bold text-dark mb-2">{{ offer.title }}</h5>
+          <p class="text-primary fw-semibold mb-2">{{ offer.companyName }}</p>
+          
+          <div class="d-flex flex-wrap gap-3 text-muted small mb-3">
+            <span><i class="bi bi-geo-alt-fill text-primary"></i> {{ offer.location }}</span>
+            <span><i class="bi bi-tags-fill text-success"></i> {{ offer.domain }}</span>
+          </div>
+
+          <p class="text-muted small line-clamp-3">{{ offer.description }}</p>
+
+          <!-- Action Buttons -->
+          <div class="mt-4">
+            <button *ngIf="!offer.alreadyApplied"
+                    class="btn btn-success w-100 fw-bold py-3 d-flex align-items-center justify-content-center gap-2"
+                    (click)="viewDetails(offer.id)">
+              <i class="bi bi-send-fill"></i> Apply Now
+            </button>
+
+            <button *ngIf="offer.alreadyApplied"
+                    class="btn btn-secondary w-100 fw-bold py-3 d-flex align-items-center justify-content-center gap-2"
+                    disabled>
+              <i class="bi bi-check-circle-fill"></i> Already Applied
+            </button>
+          </div>
+        </div>
+
+        <div class="card-footer bg-transparent border-top small text-muted text-center">
+          <i class="bi bi-clock"></i> Posted {{ offer.createdAt | date:'shortDate' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && filteredOffers.length === 0" class="text-center py-5">
+    <i class="bi bi-emoji-frown display-1 text-muted opacity-50 mb-4"></i>
+    <h3 class="text-muted">No internships found</h3>
+    <p class="text-muted mb-4">
+      Try adjusting your filters or update your skills to unlock more opportunities!
+    </p>
+    <div class="d-flex gap-3 justify-content-center">
+      <a routerLink="/users/profile" class="btn btn-primary btn-lg">
+        <i class="bi bi-person-gear"></i> Update Skills
+      </a>
+      <button class="btn btn-outline-secondary btn-lg" (click)="clearFilters()">
+        Clear Filters
+      </button>
+    </div>
+  </div>
+</div>

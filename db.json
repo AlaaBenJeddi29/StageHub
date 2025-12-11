@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "google",
+      "email": "google@gmail.com",
+      "role": "company",
+      "passwordHash": "$2b$10$oivoWv1dewRXTIK.VD/4I.iV0QNJRdtIQsW8iSMgfZjSRNRa1pKPC",
+      "profileImage": "/uploads/user-1765420640404-533342505.webp",
+      "phone": "",
+      "education": "",
+      "experience": "",
+      "industry": "Software",
+      "size": "500+ employees",
+      "website": "www.google.com",
+      "description": "we are the best",
+      "skills": []
+    }
+  ],
+  "offers": [],
+  "submissions": []
+}

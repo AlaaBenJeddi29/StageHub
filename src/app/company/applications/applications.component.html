@@ -54,12 +54,13 @@
           <!-- Actions Row -->
           <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
             <!-- CV Download -->
-            <a [href]="'http://localhost:3000' + app.cv" 
-               target="_blank" 
-               class="btn btn-outline-danger btn-sm">
-              Download CV
-            </a>
-
+          <a *ngIf="app.cv" 
+   [href]="'http://localhost:3000' + app.cv" 
+   target="_blank" 
+   class="btn btn-outline-danger btn-sm">
+  Download CV
+</a>
+<span *ngIf="!app.cv" class="text-muted small">No CV available</span>
             <!-- Decision Buttons -->
             <div class="btn-group" role="group">
               <button 
